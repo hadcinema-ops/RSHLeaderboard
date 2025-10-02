@@ -2,22 +2,43 @@
 @tailwind components;
 @tailwind utilities;
 
-@layer utilities{
-  .bg-grid{
-    background-image:
-      radial-gradient(70rem 40rem at 10% -10%, rgba(124,58,237,.25), transparent 35%),
-      radial-gradient(70rem 40rem at 90% -20%, rgba(59,130,246,.18), transparent 35%),
-      radial-gradient(70rem 60rem at 50% 120%, rgba(168,85,247,.15), transparent 40%),
-      linear-gradient(to bottom, #0b0b12, #0b0b12);
-    background-blend-mode: screen, screen, screen, normal;
-  }
-  .glass{ @apply bg-white/5 backdrop-blur-xl border border-white/10; }
-  .card{ @apply glass rounded-2xl shadow-2xl; }
-  .shine{
-    background: linear-gradient(110deg, rgba(255,255,255,.0), rgba(255,255,255,.18), rgba(255,255,255,0));
-    background-size: 200% 100%;
-    animation: shine 2.5s linear infinite;
-    border-radius: 9999px;
-  }
+:root{ --brand:#8b5cf6; --accent:#22d3ee; }
+
+body{ font-family: 'Outfit', ui-sans-serif, system-ui, -apple-system, Segoe UI, Roboto, Inter, 'Helvetica Neue', Arial; }
+
+.hero{
+  position: relative;
 }
-@keyframes shine{ 0%{background-position:200% 0} 100%{background-position:-200% 0} }
+.hero::before{
+  content:'';
+  position:absolute; inset:0;
+  background-image: url('/src/assets/hero-bg.jpg');
+  background-size: cover; background-position: center;
+  filter: blur(6px) brightness(0.5);
+  transform: scale(1.05);
+}
+.hero::after{
+  content:''; position:absolute; inset:0;
+  background: radial-gradient(60% 60% at 50% 0%, rgba(139,92,246,.35), transparent 60%),
+              radial-gradient(40% 40% at 90% 10%, rgba(34,211,238,.25), transparent 60%);
+  mix-blend-mode: screen; pointer-events:none;
+}
+.hero > .inner{ position:relative; }
+
+.glass{ @apply bg-white/10 backdrop-blur-xl border border-white/10; }
+.card{ @apply glass rounded-3xl shadow-2xl; }
+.badge{ @apply px-2.5 py-1 rounded-full text-xs uppercase tracking-wide; }
+.btn-primary{
+  @apply relative inline-flex items-center justify-center font-semibold rounded-2xl px-6 py-3;
+  background: linear-gradient(90deg, rgba(139,92,246,1), rgba(34,211,238,1));
+  box-shadow: 0 10px 30px rgba(139,92,246,.35);
+}
+.btn-primary span{ position:relative; z-index:10; }
+.btn-primary::before{
+  content:''; position:absolute; inset:-2px; border-radius:1.4rem;
+  background: linear-gradient(90deg, rgba(139,92,246,.6), rgba(34,211,238,.6));
+  filter: blur(14px); opacity:.7;
+}
+.table-row{ transition: transform .2s ease, background-color .2s ease; }
+.table-row:hover{ transform: translateY(-1px); background-color: rgba(255,255,255,0.04); }
+.gradient-title{ background: linear-gradient(90deg, #fff, #c4b5fd); -webkit-background-clip: text; background-clip: text; color: transparent; }

@@ -1,25 +1,33 @@
 import React from 'react'
-import PrizePool from './PrizePool'
 
 export default function LandingPage({onViewLeaderboard}){
   return (
-    <section className="max-w-6xl mx-auto px-4 py-14">
-      <div className="text-center">
-        <h1 className="text-4xl md:text-5xl font-extrabold tracking-tight">
-          $1,000 Monthly <span className="text-purple-400">Stake × RSH</span> Wager Leaderboard
-        </h1>
-        <div className="mt-4 text-white/80">
-          <div>Eligible users must be under codes <b>supper</b>, <b>supper10</b>, or <b>suppercap</b>.</div>
-          <div className="mt-1">Sign up on Stake.com under code <b>supper10</b> for a free $10 bonus.</div>
+    <section className="hero">
+      <div className="inner max-w-6xl mx-auto px-4 py-16 md:py-24">
+        <div className="card p-8 md:p-12">
+          <div className="badge glass mb-4">Stake × RSH</div>
+          <h1 className="text-4xl md:text-6xl font-black leading-tight gradient-title">$1,000 Monthly Wager Leaderboard</h1>
+          <div className="mt-4 text-white/85 text-lg">
+            Eligible users must be under codes <b>supper</b>, <b>supper10</b>, or <b>suppercap</b>.
+            <div className="mt-1">Sign up on Stake.com under code <b>supper10</b> for a free $10 bonus.</div>
+          </div>
+          <div className="mt-8">
+            <button onClick={onViewLeaderboard} className="btn-primary"><span>View Leaderboard</span></button>
+          </div>
         </div>
-        <div className="flex justify-center mt-8">
-          <button onClick={onViewLeaderboard} className="relative group">
-            <div className="absolute -inset-0.5 bg-gradient-to-r from-purple-500 to-indigo-500 rounded-2xl blur opacity-70 group-hover:opacity-100 transition"></div>
-            <div className="relative px-7 py-3 bg-black rounded-2xl border border-white/10 font-semibold">View Leaderboard</div>
-          </button>
+
+        <div className="grid grid-cols-1 sm:grid-cols-3 lg:grid-cols-5 gap-4 mt-8">
+          {[["🥇","1st","$500"],["🥈","2nd","$250"],["🥉","3rd","$125"],["🎖","4th","$75"],["🎖","5th","$50"]].map((p,i)=>(
+            <div key={i} className="card p-5 flex items-center justify-between">
+              <div className="text-2xl">{p[0]}</div>
+              <div className="text-right">
+                <div className="text-xs uppercase tracking-wide text-white/60">{p[1]}</div>
+                <div className="text-xl font-extrabold">{p[2]}</div>
+              </div>
+            </div>
+          ))}
         </div>
       </div>
-      <PrizePool />
     </section>
   )
 }

@@ -1,12 +1,15 @@
 import React from 'react'
-import { formatMoney } from '../utils'
 import useCountUp from '../hooks/useCountUp'
+
+function Money({val}){
+  return <span>{val.toLocaleString(undefined,{style:'currency',currency:'USD',maximumFractionDigits:0})}</span>
+}
 
 export default function Podium({top3=[], loading}){
   if(loading) return (
     <div className="grid md:grid-cols-3 gap-4">
       {Array.from({length:3}).map((_,i)=>(
-        <div key={i} className="card p-5 h-28 shine"></div>
+        <div key={i} className="card p-5 h-28 animate-pulse"></div>
       ))}
     </div>
   )
@@ -22,13 +25,13 @@ export default function Podium({top3=[], loading}){
 
 function PodiumCard({place,title='',amount=0,tone='gold',featured=false}){
   const tones={
-    gold:   'from-yellow-400/30 to-transparent',
-    silver: 'from-gray-300/25 to-transparent',
-    bronze: 'from-amber-600/25 to-transparent'
+    gold:   'from-yellow-400/25 to-transparent',
+    silver: 'from-gray-300/20 to-transparent',
+    bronze: 'from-amber-600/20 to-transparent'
   }
-  const val = useCountUp(Math.max(0, amount||0), 850)
+  const val = useCountUp(Math.max(0, amount||0), 900)
   return (
-    <div className={`relative card p-5 overflow-hidden ${featured?'scale-[1.03]':''}`}>
+    <div className={`relative card p-5 overflow-hidden ${featured?'scale-[1.03] shadow-[0_0_40px_rgba(139,92,246,.25)]':''}`}>
       <div className={`absolute inset-0 bg-gradient-to-br ${tones[tone]} pointer-events-none`}></div>
       <div className="relative flex items-center justify-between">
         <div className="text-sm text-white/70 uppercase">#{place}</div>
@@ -36,7 +39,7 @@ function PodiumCard({place,title='',amount=0,tone='gold',featured=false}){
       </div>
       <div className="relative mt-2 flex items-end justify-between">
         <div className="text-xl font-extrabold">{title || '—'}</div>
-        <div className="text-lg font-bold">{formatMoney(val)}</div>
+        <div className="text-lg font-bold"><Money val={val} /></div>
       </div>
     </div>
   )
