@@ -1,5 +1,6 @@
 import React from 'react'
 import { formatMoney } from '../utils'
+import useCountUp from '../hooks/useCountUp'
 
 export default function Podium({top3=[], loading}){
   if(loading) return (
@@ -25,6 +26,7 @@ function PodiumCard({place,title='',amount=0,tone='gold',featured=false}){
     silver: 'from-gray-300/25 to-transparent',
     bronze: 'from-amber-600/25 to-transparent'
   }
+  const val = useCountUp(Math.max(0, amount||0), 850)
   return (
     <div className={`relative card p-5 overflow-hidden ${featured?'scale-[1.03]':''}`}>
       <div className={`absolute inset-0 bg-gradient-to-br ${tones[tone]} pointer-events-none`}></div>
@@ -34,7 +36,7 @@ function PodiumCard({place,title='',amount=0,tone='gold',featured=false}){
       </div>
       <div className="relative mt-2 flex items-end justify-between">
         <div className="text-xl font-extrabold">{title || '—'}</div>
-        <div className="text-lg font-bold">{formatMoney(amount||0)}</div>
+        <div className="text-lg font-bold">{formatMoney(val)}</div>
       </div>
     </div>
   )

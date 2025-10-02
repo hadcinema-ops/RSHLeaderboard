@@ -9,7 +9,7 @@ export default function App(){
     <div className="min-h-screen bg-grid">
       <Navbar page={page} onNav={setPage} />
       {page==='landing' ? <LandingPage onViewLeaderboard={()=>setPage('leaderboard')} /> : <Leaderboard onBack={()=>setPage('landing')}/>}
-      <footer className="text-center text-xs text-white/50 py-6">Stake × RSH • Live from Google Sheets • Reload to refresh</footer>
+      <footer className="text-center text-xs text-white/50 py-6">Stake × RSH • Eligible codes: supper • supper10 • suppercap</footer>
     </div>
   )
 }

@@ -1,5 +1,4 @@
 import React from 'react'
-
 const PRIZES=[
   {place:'1st', amount:500, emoji:'🥇', color:'from-yellow-400/30 to-transparent'},
   {place:'2nd', amount:250, emoji:'🥈', color:'from-gray-300/25 to-transparent'},
@@ -7,7 +6,6 @@ const PRIZES=[
   {place:'4th', amount:75, emoji:'🎖', color:'from-purple-400/20 to-transparent'},
   {place:'5th', amount:50, emoji:'🎖', color:'from-purple-400/20 to-transparent'},
 ]
-
 export default function PrizePool(){
   return (
     <div className="mt-10 grid grid-cols-1 sm:grid-cols-3 lg:grid-cols-5 gap-4">

@@ -13,12 +13,18 @@ export function parseCurrencyLike(v){
 }
 
 export function deriveColumns(headers){
-  // try to infer username and wager columns by keywords
   const lower=headers.map(h=>String(h||'').toLowerCase())
-  let userIdx = lower.findIndex(h=>/(user|name|player|account)/.test(h))
-  if(userIdx===-1) userIdx=0
-  let wagerIdx = lower.findIndex(h=>/(wager|total|amount|volume)/.test(h))
-  if(wagerIdx===-1) wagerIdx=1
+  let userIdx = lower.findIndex(h=>h==='username' || h==='user' || h==='name')
+  let wagerIdx = lower.findIndex(h=>h==='wagered' || h==='wager' || h==='total')
+  const bad = (h)=>/(code|referral|promo)/.test(h)
+  if(userIdx===-1){
+    userIdx = lower.findIndex(h=>/(user|name|player|account)/.test(h) && !bad(h))
+  }
+  if(wagerIdx===-1){
+    wagerIdx = lower.findIndex(h=>/(wager|total|amount|volume|usd)/.test(h))
+  }
+  if(wagerIdx===-1) wagerIdx = 1
+  if(userIdx===-1) userIdx = 0
   return {userIdx,wagerIdx}
 }
 
@@ -27,13 +33,13 @@ export function tidyRows(rows, headers){
   const out=[]
   for(const r of rows){
     if(!r || r.length===0) continue
-    const user = String(r[userIdx]||'').trim()
+    let user = String(r[userIdx]??'').trim()
+    if(/^(supper|supper10|suppercap)$/i.test(user)) continue
     const wagerRaw = r[wagerIdx]
     const wager = parseCurrencyLike(wagerRaw)
     if(!user) continue
     out.push({user, wager})
   }
-  // sort desc by wager
   out.sort((a,b)=>b.wager-a.wager)
   return out.map((r,i)=>({rank:i+1, userMasked:maskUsername(r.user), ...r}))
 }
